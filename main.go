@@ -3,8 +3,9 @@ package main
 
 import (
 	"fmt"
-	analyzer "github.com/Dmaddu/devpilot/features"
 	"os"
+
+	analyzer "github.com/Dmaddu/devpilot/features"
 )
 
 func analyzeRepo(repoPath string) {
@@ -32,8 +33,20 @@ func main() {
 		}
 		repoPath := os.Args[2]
 		analyzeRepo(repoPath)
+	case "testgen":
+		if len(os.Args) < 3 {
+			fmt.Println("Usage: go run main.go testgen <repo_path>")
+			return
+		}
+		repoPath := os.Args[2]
+		result, err := analyzer.GenerateTestsForRepo(repoPath)
+		if err != nil {
+			fmt.Println("Error generating tests:", err.Error())
+			return
+		}
+		fmt.Println(result)
 	default:
 		fmt.Println("Unknown command:", command)
-		fmt.Println("Available commands: analyze")
+		fmt.Println("Available commands: analyze, testgen")
 	}
 }
