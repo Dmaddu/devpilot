@@ -4,10 +4,10 @@ package analyzer
 import (
 	"fmt"
 	"github.com/Dmaddu/devpilot/client"
+	"go/ast"
 	"go/parser"
 	"go/token"
 	"io/fs"
-	"os"
 	"path/filepath"
 	"strings"
 )
@@ -40,12 +40,12 @@ func AnalyzeRepo(rootDir string) ([]FileSummary, error) {
 
 		for _, decl := range node.Decls {
 			switch d := decl.(type) {
-			case *parser.FuncDecl:
+			case *ast.FuncDecl:
 				fileSum.Functions = append(fileSum.Functions, d.Name.Name)
-			case *parser.GenDecl:
+			case *ast.GenDecl:
 				for _, spec := range d.Specs {
-					if ts, ok := spec.(*parser.TypeSpec); ok {
-						if _, ok := ts.Type.(*parser.StructType); ok {
+					if ts, ok := spec.(*ast.TypeSpec); ok {
+						if _, ok := ts.Type.(*ast.StructType); ok {
 							fileSum.Structs = append(fileSum.Structs, ts.Name.Name)
 						}
 					}
