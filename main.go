@@ -9,7 +9,11 @@ import (
 
 func analyzeRepo(repoPath string) {
 	fmt.Printf("Analyzing repository at path: %s\n", repoPath)
-	analyzer.GetArchitectureSummary(repoPath)
+	summary, err := analyzer.GetArchitectureSummary(repoPath)
+	if err != nil {
+		fmt.Println("Error analyzing repository:", err.Error())
+	}
+	fmt.Println(summary)
 }
 
 func main() {
