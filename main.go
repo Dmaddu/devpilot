@@ -45,9 +45,6 @@ func main() {
 			return
 		}
 		fmt.Println(result)
-	default:
-		fmt.Println("Unknown command:", command)
-		fmt.Println("Available commands: analyze, testgen")
 	case "review":
 		if len(os.Args) < 3 {
 			fmt.Println("Usage: go run main.go review <pr_link>")
@@ -62,6 +59,6 @@ func main() {
 		fmt.Println(review)
 	default:
 		fmt.Println("Unknown command:", command)
-		fmt.Println("Available commands: analyze, review")
+		fmt.Println("Available commands: analyze, testgen, review")
 	}
 }
