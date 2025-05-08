@@ -42,7 +42,7 @@ type GPTResponse struct {
 // NewGPTClient initializes a new GPTClient with config from environment
 func NewGPTClient() *GPTClient {
 	return &GPTClient{
-		apiKey:     "FEHb9gIIByqzOKz0mczL0rU4heu5veqLu6OMSKuHHVRWMeFR80NlJQQJ99BCAC77bzfXJ3w3AAABACOGQdFM",
+		apiKey:     "YOUR_OPENAI_API_KEY", // Replace with your actual API key
 		apiURL:     "https://in-ep-one.openai.azure.com/",
 		httpClient: &http.Client{},
 	}
