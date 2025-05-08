@@ -43,7 +43,7 @@ type GPTResponse struct {
 func NewGPTClient() *GPTClient {
 	return &GPTClient{
 		apiKey:     "YOUR_OPENAI_API_KEY", // Replace with your actual API key
-		apiURL:     "https://in-ep-one.openai.azure.com/",
+		apiURL:     "",
 		httpClient: &http.Client{},
 	}
 }
