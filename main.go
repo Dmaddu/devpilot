@@ -93,8 +93,20 @@ func main() {
 			return
 		}
 		fmt.Println(refactoredCode)
+	case "loganalysis":
+		if len(os.Args) < 3 {
+			fmt.Println("Usage: go run main.go loganalysis <log_file_path>")
+			return
+		}
+		logFilePath := os.Args[2]
+		result, err := features.AnalyzeLogs(logFilePath)
+		if err != nil {
+			fmt.Println("Error analyzing logs:", err.Error())
+			return
+		}
+		fmt.Println(result)
 	default:
 		fmt.Println("Unknown command:", command)
-		fmt.Println("Available commands: analyze, testgen, review, docsummary, docgen, refactor")
+		fmt.Println("Available commands: analyze, testgen, review, docsummary, docgen, refactor, loganalysis")
 	}
 }
