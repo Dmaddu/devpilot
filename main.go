@@ -81,8 +81,20 @@ func main() {
 			return
 		}
 		fmt.Println(documentation)
+	case "refactor":
+		if len(os.Args) < 3 {
+			fmt.Println("Usage: go run main.go refactor <file_path>")
+			return
+		}
+		filePath := os.Args[2]
+		refactoredCode, err := features.RefactorFile(filePath)
+		if err != nil {
+			fmt.Println("Error refactoring file:", err.Error())
+			return
+		}
+		fmt.Println(refactoredCode)
 	default:
 		fmt.Println("Unknown command:", command)
-		fmt.Println("Available commands: analyze, testgen, review, docsummary, docgen")
+		fmt.Println("Available commands: analyze, testgen, review, docsummary, docgen, refactor")
 	}
 }
