@@ -57,8 +57,20 @@ func main() {
 			return
 		}
 		fmt.Println(review)
+	case "docsummary":
+		if len(os.Args) < 3 {
+			fmt.Println("Usage: go run main.go docsummary <doc_url>")
+			return
+		}
+		docURL := os.Args[2]
+		summary, err := analyzer.GetDocumentationSummary(docURL)
+		if err != nil {
+			fmt.Println("Error summarizing documentation:", err.Error())
+			return
+		}
+		fmt.Println(summary)
 	default:
 		fmt.Println("Unknown command:", command)
-		fmt.Println("Available commands: analyze, testgen, review")
+		fmt.Println("Available commands: analyze, testgen, review, docsummary")
 	}
 }
