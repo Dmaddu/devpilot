@@ -1,15 +1,16 @@
 // analyzer/repo_analyzer.go
-package analyzer
+package features
 
 import (
 	"fmt"
-	"github.com/Dmaddu/devpilot/client"
 	"go/ast"
 	"go/parser"
 	"go/token"
 	"io/fs"
 	"path/filepath"
 	"strings"
+
+	"github.com/Dmaddu/devpilot/client"
 )
 
 type FileSummary struct {

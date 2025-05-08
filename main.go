@@ -5,12 +5,12 @@ import (
 	"fmt"
 	"os"
 
-	analyzer "github.com/Dmaddu/devpilot/features"
+	features "github.com/Dmaddu/devpilot/features"
 )
 
 func analyzeRepo(repoPath string) {
 	fmt.Printf("Analyzing repository at path: %s\n", repoPath)
-	summary, err := analyzer.GetArchitectureSummary(repoPath)
+	summary, err := features.GetArchitectureSummary(repoPath)
 	if err != nil {
 		fmt.Println("Error analyzing repository:", err.Error())
 	}
@@ -39,7 +39,7 @@ func main() {
 			return
 		}
 		repoPath := os.Args[2]
-		result, err := analyzer.GenerateTestsForRepo(repoPath)
+		result, err := features.GenerateTestsForRepo(repoPath)
 		if err != nil {
 			fmt.Println("Error generating tests:", err.Error())
 			return
@@ -51,14 +51,38 @@ func main() {
 			return
 		}
 		prLink := os.Args[2]
-		review, err := analyzer.GetReviewSummary(prLink)
+		review, err := features.GetReviewSummary(prLink)
 		if err != nil {
 			fmt.Println("Error reviewing PR:", err.Error())
 			return
 		}
 		fmt.Println(review)
+	case "docsummary":
+		if len(os.Args) < 3 {
+			fmt.Println("Usage: go run main.go docsummary <doc_url>")
+			return
+		}
+		docURL := os.Args[2]
+		summary, err := features.GetDocumentationSummary(docURL)
+		if err != nil {
+			fmt.Println("Error summarizing documentation:", err.Error())
+			return
+		}
+		fmt.Println(summary)
+	case "docgen":
+		if len(os.Args) < 3 {
+			fmt.Println("Usage: go run main.go docgen <repo_path>")
+			return
+		}
+		repoPath := os.Args[2]
+		documentation, err := features.GenerateDocumentation(repoPath)
+		if err != nil {
+			fmt.Println("Error generating documentation:", err.Error())
+			return
+		}
+		fmt.Println(documentation)
 	default:
 		fmt.Println("Unknown command:", command)
-		fmt.Println("Available commands: analyze, testgen, review")
+		fmt.Println("Available commands: analyze, testgen, review, docsummary, docgen")
 	}
 }
