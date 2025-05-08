@@ -1,4 +1,4 @@
-package analyzer
+package features
 
 import (
 	"fmt"
