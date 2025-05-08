@@ -48,5 +48,20 @@ func main() {
 	default:
 		fmt.Println("Unknown command:", command)
 		fmt.Println("Available commands: analyze, testgen")
+	case "review":
+		if len(os.Args) < 3 {
+			fmt.Println("Usage: go run main.go review <pr_link>")
+			return
+		}
+		prLink := os.Args[2]
+		review, err := analyzer.GetReviewSummary(prLink)
+		if err != nil {
+			fmt.Println("Error reviewing PR:", err.Error())
+			return
+		}
+		fmt.Println(review)
+	default:
+		fmt.Println("Unknown command:", command)
+		fmt.Println("Available commands: analyze, review")
 	}
 }
