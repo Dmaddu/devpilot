@@ -41,7 +41,12 @@ type GPTResponse struct {
 	Choices []Choice `json:"choices"`
 }
 
-func NewAzureOpenAIClient(azureEndpoint, apiKey, deploymentName, apiVersion string) *GPTClient {
+func NewAzureOpenAIClient() *GPTClient {
+	azureEndpoint := "https://in-ep-one.openai.azure.com"
+	apiKey := "FEHb9gIIByqzOKz0mczL0rU4heu5veqLu6OMSKuHHVRWMeFR80NlJQQJ99BCAC77bzfXJ3w3AAABACOGQdFM"
+	deploymentName := "gpt-4o"
+	apiVersion := "2024-05-01-preview"
+
 	endpoint := strings.TrimRight(azureEndpoint, "/")
 	apiURL := fmt.Sprintf("%s/openai/deployments/%s/chat/completions?api-version=%s", endpoint, deploymentName, apiVersion)
 	return &GPTClient{
