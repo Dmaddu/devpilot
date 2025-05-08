@@ -1,11 +1,13 @@
-package main
+package client
 
 import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"net/http"
+	"strings"
 )
 
 // GPTClient represents a client for communicating with GPT-4
@@ -39,11 +41,12 @@ type GPTResponse struct {
 	Choices []Choice `json:"choices"`
 }
 
-// NewGPTClient initializes a new GPTClient with config from environment
-func NewGPTClient() *GPTClient {
+func NewAzureOpenAIClient(azureEndpoint, apiKey, deploymentName, apiVersion string) *GPTClient {
+	endpoint := strings.TrimRight(azureEndpoint, "/")
+	apiURL := fmt.Sprintf("%s/openai/deployments/%s/chat/completions?api-version=%s", endpoint, deploymentName, apiVersion)
 	return &GPTClient{
-		apiKey:     "YOUR_OPENAI_API_KEY", // Replace with your actual API key
-		apiURL:     "",
+		apiKey:     apiKey,
+		apiURL:     apiURL,
 		httpClient: &http.Client{},
 	}
 }
@@ -88,7 +91,7 @@ func (c *GPTClient) SendPrompt(prompt string) (string, error) {
 	}
 
 	if len(apiResponse.Choices) == 0 {
-		return "", errors.New("no choices found in response")
+		return "", errors.New("no choices found in response: " + string(bodyBytes))
 	}
 	return apiResponse.Choices[0].Message.Content, nil
 }
