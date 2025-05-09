@@ -105,8 +105,48 @@ func main() {
 			return
 		}
 		fmt.Println(result)
+	case "security-scanner":
+		if len(os.Args) < 3 {
+			fmt.Println("Usage: go run main.go security-scanner <repo_path>")
+			return
+		}
+		repoPath := os.Args[2]
+		result, err := features.AnalyzeSecurityIssues(repoPath)
+		if err != nil {
+			fmt.Println("Error analyzing repository security:", err.Error())
+			return
+		}
+		fmt.Println(result)
+	case "dependency-analysis":
+		if len(os.Args) < 3 {
+			fmt.Println("Usage: go run main.go dependency-analysis <repo_path>")
+			return
+		}
+		repoPath := os.Args[2]
+		fmt.Println("Starting Intelligent Dependency Analysis with enhanced visualization...")
+		result, err := features.AnalyzeDependencies(repoPath)
+		if err != nil {
+			fmt.Println("Error analyzing repository security:", err.Error())
+		}
+		fmt.Println(result)
+	case "test-review":
+		if len(os.Args) < 3 {
+			fmt.Println("Usage: go run main.go test-review <pr_diff_file_path>")
+			return
+		}
+		prPath := os.Args[2]
+		// If the input is a valid file, add "file://" prefix.
+		if _, err := os.Stat(prPath); err == nil {
+			prPath = "file://" + prPath
+		}
+		recommendation, err := features.RecommendTestsForPR(prPath)
+		if err != nil {
+			fmt.Println("Error analyzing PR for tests:", err.Error())
+			return
+		}
+		fmt.Println(recommendation)
 	default:
 		fmt.Println("Unknown command:", command)
-		fmt.Println("Available commands: analyze, testgen, review, docsummary, docgen, refactor, loganalysis")
+		fmt.Println("Available commands: analyze, testgen, review, docsummary, docgen, refactor, loganalysis, security-scanner, dependency-analysis,test-review")
 	}
 }
