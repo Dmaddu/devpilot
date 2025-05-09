@@ -32,6 +32,7 @@ func showFeaturesAndPrompt() {
 	fmt.Println("\033[1;32m=========================================\033[0m")
 	fmt.Println("\033[1;32m   🚀 Welcome to DevPilot CLI! 🚀   \033[0m")
 	fmt.Println("\033[1;32m=========================================\033[0m")
+
 	featureDescriptions := []struct {
 		Key         string
 		Description string
