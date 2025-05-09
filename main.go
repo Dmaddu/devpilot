@@ -37,11 +37,11 @@ func showFeaturesAndPrompt() {
 		Description string
 	}{
 		{"analyze", "🔍 Analyze a repository's architecture"},
-		{"refactor", "🔧 Refactor a Go file"},
+		{"refactor", "🔧 Refactor to a Go file"},
 		{"review", "📝 Review a pull request"},
 		{"security-scanner", "🔒 Scan the repository for security issues"},
 		{"dependency-analysis", "📦 Analyze and visualize repository dependencies"},
-		{"loganalysis", "📊 Analyze log files for errors and suggestions"},
+		{"loganalysis", "📊 Analyze log files for errors and remediations"},
 		{"testgen", "🧪 Generate tests for a repository"},
 		{"docgen", "📚 Generate documentation for a repository"},
 		{"docsummary", "📄 Summarize documentation from a URL"},
