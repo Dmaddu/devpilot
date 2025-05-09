@@ -105,8 +105,21 @@ func main() {
 			return
 		}
 		fmt.Println(result)
+	case "dependency-analysis":
+		if len(os.Args) < 3 {
+			fmt.Println("Usage: go run main.go dependency-analysis <repo_path>")
+			return
+		}
+		repoPath := os.Args[2]
+		fmt.Println("Starting Intelligent Dependency Analysis with enhanced visualization...")
+		result, err := features.AnalyzeDependencies(repoPath)
+		if err != nil {
+			fmt.Println("Error during intelligent dependency analysis:", err.Error())
+			return
+		}
+		fmt.Println(result)
 	default:
 		fmt.Println("Unknown command:", command)
-		fmt.Println("Available commands: analyze, testgen, review, docsummary, docgen, refactor, loganalysis")
+		fmt.Println("Available commands: analyze, testgen, review, docsummary, docgen, refactor, loganalysis, dependency-analysis")
 	}
 }
