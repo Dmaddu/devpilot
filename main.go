@@ -8,15 +8,6 @@ import (
 	features "github.com/Dmaddu/devpilot/features"
 )
 
-func analyzeRepo(repoPath string) {
-	fmt.Printf("Analyzing repository at path: %s\n", repoPath)
-	summary, err := features.GetArchitectureSummary(repoPath)
-	if err != nil {
-		fmt.Println("Error analyzing repository:", err.Error())
-	}
-	fmt.Println(summary)
-}
-
 func main() {
 	if len(os.Args) < 2 {
 		fmt.Println("Usage: go run main.go <command> [arguments]")
@@ -32,7 +23,11 @@ func main() {
 			return
 		}
 		repoPath := os.Args[2]
-		analyzeRepo(repoPath)
+		summary, err := features.GetArchitectureSummary(repoPath)
+		if err != nil {
+			fmt.Println("Error analyzing repository:", err.Error())
+		}
+		fmt.Println(summary)
 	case "testgen":
 		if len(os.Args) < 3 {
 			fmt.Println("Usage: go run main.go testgen <repo_path>")
@@ -129,9 +124,9 @@ func main() {
 			fmt.Println("Error analyzing repository security:", err.Error())
 		}
 		fmt.Println(result)
-	case "test-review":
+	case "recommend-tests":
 		if len(os.Args) < 3 {
-			fmt.Println("Usage: go run main.go test-review <pr_diff_file_path>")
+			fmt.Println("Usage: go run main.go recommend-tests <pr_diff_file_path>")
 			return
 		}
 		prPath := os.Args[2]
@@ -147,6 +142,6 @@ func main() {
 		fmt.Println(recommendation)
 	default:
 		fmt.Println("Unknown command:", command)
-		fmt.Println("Available commands: analyze, testgen, review, docsummary, docgen, refactor, loganalysis, security-scanner, dependency-analysis,test-review")
+		fmt.Println("Available commands: analyze, testgen, review, docsummary, docgen, refactor, loganalysis, security-scanner, dependency-analysis,recommend-tests")
 	}
 }
