@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
 	"strings"
 )
 
@@ -42,8 +43,8 @@ type GPTResponse struct {
 }
 
 func NewAzureOpenAIClient() *GPTClient {
-	azureEndpoint := "https://in-ep-one.openai.azure.com"
-	apiKey := "FEHb9gIIByqzOKz0mczL0rU4heu5veqLu6OMSKuHHVRWMeFR80NlJQQJ99BCAC77bzfXJ3w3AAABACOGQdFM"
+	azureEndpoint := os.Getenv("AZURE_ENDPOINT")
+	apiKey := os.Getenv("AZURE_API_KEY")
 	deploymentName := "gpt-4o"
 	apiVersion := "2024-05-01-preview"
 

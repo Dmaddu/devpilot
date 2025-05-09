@@ -28,7 +28,7 @@ You are a senior software engineer specializing in dependency analysis and visua
 The dependency data below has been extracted locally using "go list -m -json all".
 Analyze this data to identify outdated dependencies, potential conflicts, and any known vulnerabilities.
 For each dependency with a vulnerability, include its CVE identifier(s) (CVE numbers) in your response.
-Provide a detailed visualization plan along with practical suggestions for improvement.
+Provide a detailed visualization plan along with practical suggestions for improvement along with safer versions for each dependency.
  
 Dependency Data:
 %s
