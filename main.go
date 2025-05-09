@@ -37,12 +37,15 @@ func showFeaturesAndPrompt() {
 		Description string
 	}{
 		{"analyze", "🔍 Analyze a repository's architecture"},
-		{"testgen", "🧪 Generate tests for a repository"},
-		{"review", "📝 Review a pull request"},
-		{"docsummary", "📄 Summarize documentation from a URL"},
-		{"docgen", "📚 Generate documentation for a repository"},
 		{"refactor", "🔧 Refactor a Go file"},
+		{"review", "📝 Review a pull request"},
+		{"security-scanner", "🔒 Scan the repository for security issues"},
+		{"dependency-analysis", "📦 Analyze and visualize repository dependencies"},
 		{"loganalysis", "📊 Analyze log files for errors and suggestions"},
+		{"testgen", "🧪 Generate tests for a repository"},
+		{"docgen", "📚 Generate documentation for a repository"},
+		{"docsummary", "📄 Summarize documentation from a URL"},
+		{"test-review", "🧪 Recommend tests for a pull request"},
 	}
 
 	for {
@@ -163,6 +166,45 @@ func showFeaturesAndPrompt() {
 				return
 			}
 			fmt.Println(result) // Display formatted response
+		case "dependency-analysis":
+			fmt.Print("\033[1;32m📦 Enter the repository path:\033[0m ")
+			var repoPath string
+			fmt.Scanln(&repoPath)
+			done := make(chan bool)
+			showLoader("Analyzing dependencies", done)
+			result, err := features.AnalyzeDependencies(repoPath)
+			done <- true
+			if err != nil {
+				fmt.Println("Error analyzing dependencies:", err.Error())
+				return
+			}
+			fmt.Println(result) // Display formatted response
+		case "security-scanner":
+			fmt.Print("\033[1;32m🔒 Enter the repository path:\033[0m ")
+			var repoPath string
+			fmt.Scanln(&repoPath)
+			done := make(chan bool)
+			showLoader("Scanning for security issues", done)
+			result, err := features.AnalyzeSecurityIssues(repoPath)
+			done <- true
+			if err != nil {
+				fmt.Println("Error scanning for security issues:", err.Error())
+				return
+			}
+			fmt.Println(result) // Display formatted response
+		case "test-review":
+			fmt.Print("\033[1;32m🧪 Enter the PR diff file path:\033[0m ")
+			var prPath string
+			fmt.Scanln(&prPath)
+			done := make(chan bool)
+			showLoader("Recommending tests for PR", done)
+			recommendation, err := features.RecommendTestsForPR(prPath)
+			done <- true
+			if err != nil {
+				fmt.Println("Error recommending tests for PR:", err.Error())
+				return
+			}
+			fmt.Println(recommendation) // Display formatted response
 		default:
 			fmt.Println("\033[1;31m❌ Unknown feature. Please choose a valid feature from the list.\033[0m")
 		}
